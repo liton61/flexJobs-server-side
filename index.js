@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@cluster0.hgznyse.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri);
+// console.log(uri);
 
 
 const client = new MongoClient(uri, {
@@ -25,7 +25,15 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         await client.connect();
-        // Send a ping to confirm a successful connection
+
+        const webCollection = client.db("flexJobsDB").collection('web');
+
+        // get all data from database
+        app.get('/web', async (req, res) => {
+            const result = await webCollection.find().toArray();
+            res.send(result);
+        })
+
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
