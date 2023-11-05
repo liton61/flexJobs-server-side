@@ -27,10 +27,16 @@ async function run() {
         await client.connect();
 
         const webCollection = client.db("flexJobsDB").collection('web');
+        const marketingCollection = client.db("flexJobsDB").collection('marketing');
 
         // get all data from database
         app.get('/web', async (req, res) => {
             const result = await webCollection.find().toArray();
+            res.send(result);
+        })
+        // get all data from database
+        app.get('/marketing', async (req, res) => {
+            const result = await marketingCollection.find().toArray();
             res.send(result);
         })
 
