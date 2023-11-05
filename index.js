@@ -26,27 +26,26 @@ async function run() {
     try {
         await client.connect();
 
-        const webCollection = client.db("flexJobsDB").collection('web');
-        const marketingCollection = client.db("flexJobsDB").collection('marketing');
-        const graphicsCollection = client.db("flexJobsDB").collection('graphics');
+        const jobsCollection = client.db("flexJobsDB").collection('jobs');
+
+        // post method
+        app.post('/jobs', async (req, res) => {
+            const jobsInfo = req.body;
+            const result = await jobsCollection.insertOne(jobsInfo);
+            res.send(result);
+        });
 
         // get all data from database
-        app.get('/web', async (req, res) => {
-            const result = await webCollection.find().toArray();
-            res.send(result);
-        })
+        // app.get('/marketing', async (req, res) => {
+        //     const result = await marketingCollection.find().toArray();
+        //     res.send(result);
+        // })
 
         // get all data from database
-        app.get('/marketing', async (req, res) => {
-            const result = await marketingCollection.find().toArray();
-            res.send(result);
-        })
-
-        // get all data from database
-        app.get('/graphics', async (req, res) => {
-            const result = await graphicsCollection.find().toArray();
-            res.send(result);
-        })
+        // app.get('/graphics', async (req, res) => {
+        //     const result = await gra.find().toArray();
+        //     res.send(result);
+        // })
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
