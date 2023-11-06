@@ -27,6 +27,7 @@ async function run() {
         await client.connect();
 
         const jobsCollection = client.db("flexJobsDB").collection('jobs');
+        const bidsCollection = client.db("flexJobsDB").collection('bids');
 
         // post method
         app.post('/jobs', async (req, res) => {
