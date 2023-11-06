@@ -32,7 +32,14 @@ async function run() {
         // post method
         app.post('/jobs', async (req, res) => {
             const jobsInfo = req.body;
-            const result = await jobsCollection.insertOne(jobsInfo);
+            const result = await bidsCollection.insertOne(jobsInfo);
+            res.send(result);
+        });
+
+        // post method
+        app.post('/bids', async (req, res) => {
+            const bids = req.body;
+            const result = await bidsCollection.insertOne(bids);
             res.send(result);
         });
 
