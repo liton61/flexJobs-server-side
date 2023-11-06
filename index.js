@@ -32,7 +32,7 @@ async function run() {
         // post method
         app.post('/jobs', async (req, res) => {
             const jobsInfo = req.body;
-            const result = await bidsCollection.insertOne(jobsInfo);
+            const result = await jobsCollection.insertOne(jobsInfo);
             res.send(result);
         });
 
@@ -74,6 +74,14 @@ async function run() {
                 }
             }
             const result = await jobsCollection.updateOne(filter, jobs, options);
+            res.send(result)
+        })
+
+        // delete method
+        app.delete('/jobs/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await jobsCollection.deleteOne(query);
             res.send(result)
         })
 
