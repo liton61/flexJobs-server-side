@@ -57,6 +57,26 @@ async function run() {
             res.send(result);
         })
 
+        // update method
+        app.put('/jobs/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updateJob = req.body;
+            const jobs = {
+                $set: {
+                    email: updateJob.email,
+                    title: updateJob.title,
+                    deadline: updateJob.deadline,
+                    description: updateJob.description,
+                    category: updateJob.category,
+                    price: updateJob.price
+                }
+            }
+            const result = await jobsCollection.updateOne(filter, jobs, options);
+            res.send(result)
+        })
+
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
