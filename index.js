@@ -87,12 +87,12 @@ async function run() {
 
 
         // get data from database
-        app.get('/jobs', async (req, res) => {
+        app.get('/bids', async (req, res) => {
             let query = {};
             if (req.query?.email) {
                 query = { email: req.query.email }
             }
-            const result = await jobsCollection.find(query).toArray();
+            const result = await bidsCollection.find(query).toArray();
             res.send(result);
         })
 
